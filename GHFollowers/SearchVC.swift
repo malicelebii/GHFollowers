@@ -11,11 +11,15 @@ class SearchVC: UIViewController {
     
     let logoImageView = UIImageView()
     let usernameTextField = GFTextField()
+    let getFollowersButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureLogoImageView()
         configureTextField()
+        configureGetFollowersButton()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -45,5 +49,15 @@ class SearchVC: UIViewController {
             usernameTextField.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
+    
+    func configureGetFollowersButton() {
+        view.addSubview(getFollowersButton)
+        
+        NSLayoutConstraint.activate([
+            getFollowersButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            getFollowersButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            getFollowersButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            getFollowersButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
     }
 }
