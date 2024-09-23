@@ -10,10 +10,12 @@ import UIKit
 class SearchVC: UIViewController {
     
     let logoImageView = UIImageView()
+    let usernameTextField = GFTextField()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureLogoImageView()
+        configureTextField()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,5 +35,15 @@ class SearchVC: UIViewController {
         ])
     }
     
+    func configureTextField() {
+        view.addSubview(usernameTextField)
+        
+        NSLayoutConstraint.activate([
+            usernameTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 48),
+            usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            usernameTextField.heightAnchor.constraint(equalToConstant: 50),
+        ])
+    }
     }
 }
