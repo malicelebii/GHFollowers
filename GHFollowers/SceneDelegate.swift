@@ -14,8 +14,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        let searchNC = UINavigationController(rootViewController: SearchVC())
+        searchNC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+        searchNC.title = "Search"
+        
+        let favoritesNC = UINavigationController(rootViewController: FavoritesListVC())
+        favoritesNC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        favoritesNC.title = "Favorites"
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [searchNC, favoritesNC]
+        let apperaence = UITabBarAppearance()
+        apperaence.backgroundColor = .systemBackground
+        tabBarController.tabBar.standardAppearance = apperaence
+        
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ViewController()
+        window.rootViewController = tabBarController
         self.window = window
         window.makeKeyAndVisible()
     }
