@@ -9,20 +9,26 @@ import UIKit
 
 class GFAlertVC: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    var alertTitle: String?
+    var message: String?
+    var buttonTitle: String?
+    
+    init(title: String, message: String, buttonTitle: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.alertTitle = title
+        self.message = message
+        self.buttonTitle = buttonTitle
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+    }
+    
     }
     */
 
