@@ -46,6 +46,7 @@ class SearchVC: UIViewController {
     
     func configureTextField() {
         view.addSubview(usernameTextField)
+        usernameTextField.delegate = self
         
         NSLayoutConstraint.activate([
             usernameTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 48),
@@ -57,6 +58,7 @@ class SearchVC: UIViewController {
     
     func configureGetFollowersButton() {
         view.addSubview(getFollowersButton)
+        getFollowersButton.addTarget(self, action: #selector(pushToFollowersVC), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             getFollowersButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
@@ -80,4 +82,9 @@ class SearchVC: UIViewController {
     }
 }
 
+extension SearchVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        pushToFollowersVC()
+        return true
+    }
 }
