@@ -11,6 +11,7 @@ class GFAlertVC: UIViewController {
 
     let containerView = UIView()
     let titleLabel = GFTitleLabel(textAlingment: .center, fontSize: 20)
+    let messageLabel = GFBodyLabel(textAlingment: .center)
     let actionButton = GFButton(backgroundColor: .systemPink, title: "Ok")
     
     var alertTitle: String?
@@ -36,6 +37,7 @@ class GFAlertVC: UIViewController {
         configureContainerView()
         configureTitleLabel()
         configureActionButton()
+        configureMessageLabel()
     }
     
     func configureContainerView() {
@@ -79,7 +81,21 @@ class GFAlertVC: UIViewController {
         ])
     }
     
+    func configureMessageLabel() {
+        containerView.addSubview(messageLabel)
+        messageLabel.text = message ?? "Unable to complete request"
+        messageLabel.numberOfLines = 4
+        
+        NSLayoutConstraint.activate([
+            messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            messageLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -12),
+            messageLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
+            messageLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
+        ])
+        
     }
-    */
-
+    
+    @objc func actionButtonTapped() {
+        dismiss(animated: true)
+    }
 }
