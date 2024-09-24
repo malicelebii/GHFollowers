@@ -69,4 +69,15 @@ class SearchVC: UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    @objc func pushToFollowersVC() {
+        guard isUsernameEntered else { return }
+        
+        let followersVC = FollowersVC()
+        followersVC.username = usernameTextField.text
+        followersVC.title = usernameTextField.text
+        navigationController?.pushViewController(followersVC, animated: true)
+    }
+}
+
 }
