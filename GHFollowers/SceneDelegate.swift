@@ -28,6 +28,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         apperaence.backgroundColor = .systemBackground
         tabBarController.tabBar.standardAppearance = apperaence
         
+        UINavigationBar.appearance().tintColor = .systemGreen
+        
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = tabBarController
         self.window = window
