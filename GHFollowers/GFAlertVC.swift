@@ -11,9 +11,13 @@ class GFAlertVC: UIViewController {
 
     let containerView = UIView()
     let titleLabel = GFTitleLabel(textAlingment: .center, fontSize: 20)
+    let actionButton = GFButton(backgroundColor: .systemPink, title: "Ok")
+    
     var alertTitle: String?
     var message: String?
     var buttonTitle: String?
+    
+    let padding: CGFloat = 20
     
     init(title: String, message: String, buttonTitle: String) {
         super.init(nibName: nil, bundle: nil)
@@ -31,6 +35,7 @@ class GFAlertVC: UIViewController {
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
         configureContainerView()
         configureTitleLabel()
+        configureActionButton()
     }
     
     func configureContainerView() {
@@ -58,6 +63,19 @@ class GFAlertVC: UIViewController {
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             titleLabel.heightAnchor.constraint(equalToConstant: 28)
+        ])
+    }
+    
+    func configureActionButton() {
+        containerView.addSubview(actionButton)
+        actionButton.setTitle(buttonTitle, for: .normal)
+        actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -padding),
+            actionButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
+            actionButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
+            actionButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
     
