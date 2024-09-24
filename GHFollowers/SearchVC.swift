@@ -19,6 +19,8 @@ class SearchVC: UIViewController {
         configureLogoImageView()
         configureTextField()
         configureGetFollowersButton()
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(gesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,5 +61,9 @@ class SearchVC: UIViewController {
             getFollowersButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             getFollowersButton.heightAnchor.constraint(equalToConstant: 50),
         ])
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
