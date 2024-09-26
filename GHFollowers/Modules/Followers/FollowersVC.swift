@@ -7,11 +7,12 @@
 
 import UIKit
 
-class FollowersVC: UIViewController {
+enum Section {
+    case main
+}
 
-    enum Section {
-        case main
-    }
+class FollowersVC: UIViewController {
+    let followersViewModel = FollowersViewModel()
 
     var username: String?
     var collectionView: UICollectionView = {
@@ -27,6 +28,7 @@ class FollowersVC: UIViewController {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         setupUI()
+        followersViewModel.getFollowers(for: username)
         configureDataSource()
     }
 
