@@ -37,6 +37,21 @@ class FollowersVC: UIViewController {
     private func setupUI() {
         view.addSubview(collectionView)
         collectionView.frame = view.bounds
-        collectionView.backgroundColor = .systemPink
+        collectionView.backgroundColor = .systemBackground
+        collectionView.collectionViewLayout = createFlowLayout()
+    }
+    
+    private func createFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = view.bounds.width
+        let padding: CGFloat = 12
+        let minimumInteritemSpacing: CGFloat = 10
+        let availableWidth = width - (padding * 2) - (minimumInteritemSpacing * 2)
+        let itemWidth = availableWidth / 3
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth + 40)
+        layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        return layout
+    }
+    
     }
 }
