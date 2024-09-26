@@ -27,6 +27,7 @@ class FollowersVC: UIViewController {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         setupUI()
+        configureDataSource()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -53,5 +54,13 @@ class FollowersVC: UIViewController {
         return layout
     }
     
+    func configureDataSource() {
+        collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section, Follower>(collectionView: collectionView) { collectionView, indexPath, follower -> UICollectionViewCell in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FollowerCell.identifier, for: indexPath) as! FollowerCell
+            cell.set(follower: follower)
+            return cell
+        }
     }
+    
+    
 }
