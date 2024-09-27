@@ -26,12 +26,11 @@ class GFAvatarImageView: UIImageView {
     }
     
     func downloadAvatarImage(from urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-            guard let data else { return }
-            DispatchQueue.main.async {
-                self?.image = UIImage(data: data)
+        Task {
+            let image = await NetworkManager.shared.downloadImage(from: urlString)
+            DispatchQueue.main.async { [weak self] in
+                self?.image = image
             }
-        }.resume()
+        }
     }
 }
