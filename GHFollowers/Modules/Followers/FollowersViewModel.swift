@@ -31,11 +31,11 @@ final class FollowersViewModel: FollowersViewModelProtocol {
     
     func getFollowers(for username: String?) {
         guard let username else { return }
-        networkManager.getFollowers(for: username, page: 1) { result in
+        networkManager.getFollowers(for: username, page: 1) {[weak self] result in
             switch result {
             case .success(let followers):
-                self.followers = followers
-                self.updateData()
+                self?.followers = followers
+                self?.updateData()
             case .failure(let error):
                 print(error)
             }
