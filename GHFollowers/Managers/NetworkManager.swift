@@ -15,7 +15,7 @@ protocol NetworkManagerProtocol {
 final class NetworkManager: NetworkManagerProtocol {
     static let shared = NetworkManager()
     let baseURL = "https://api.github.com/users/"
-    
+    let cache = NSCache<NSString, UIImage>()
     
     func getFollowers(for username: String, page: Int, completion: @escaping (Result<[Follower], NetworkErrors>) -> Void) {
         let endpoint = baseURL + username + "/followers?per_page=100&page=\(page)"
@@ -54,11 +54,20 @@ final class NetworkManager: NetworkManagerProtocol {
     
     func downloadImage(from urlString: String) async -> UIImage {
         var image: UIImage?
+        if let cacheImage = cache.object(forKey: NSString(string: urlString)) {
+            image = cacheImage
+            guard let image else { return UIImage() }
+            return image
+        }
+        
         guard let url = URL(string: urlString) else { return UIImage()}
         let urlRequest = URLRequest(url: url)
         do {
             let (data, _) = try await URLSession.shared.data(for: urlRequest)
             image = UIImage(data: data)
+            if let image {
+                cache.setObject(image, forKey: NSString(string: urlString))
+            }
         } catch {
             print(error)
         }
