@@ -11,6 +11,10 @@ enum Section {
     case main
 }
 
+protocol FollowersVCDelegate: AnyObject {
+    func didUpdateData(with snaphot: NSDiffableDataSourceSnapshot<Section, Follower>)
+}
+
 class FollowersVC: UIViewController {
     let followersViewModel = FollowersViewModel()
 
@@ -27,6 +31,7 @@ class FollowersVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+        followersViewModel.view = self
         setupUI()
         followersViewModel.getFollowers(for: username)
         configureDataSource()
@@ -51,6 +56,12 @@ class FollowersVC: UIViewController {
             return cell
         }
     }
-    
-    
+}
+
+extension FollowersVC: FollowersVCDelegate {
+    func didUpdateData(with snapshot: NSDiffableDataSourceSnapshot<Section, Follower>) {
+        DispatchQueue.main.async {
+            self.collectionViewDiffableDataSource.apply(snapshot, animatingDifferences: true , completion: nil)
+        }
+    }
 }

@@ -15,6 +15,7 @@ protocol FollowersViewModelProtocol {
 final class FollowersViewModel: FollowersViewModelProtocol {
     var followers: [Follower] = []
     let networkManager: NetworkManagerProtocol
+    weak var view: FollowersVCDelegate?
     
     init(networkManager: NetworkManagerProtocol = NetworkManager.shared) {
         self.networkManager = networkManager
@@ -24,9 +25,7 @@ final class FollowersViewModel: FollowersViewModelProtocol {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
-//        DispatchQueue.main.async {
-//            self.collectionViewDiffableDataSource.apply(snapshot, animatingDifferences: true , completion: nil)
-//        }
+        view?.didUpdateData(with: snapshot)
     }
     
     func getFollowers(for username: String?) {
