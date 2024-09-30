@@ -47,6 +47,7 @@ class FollowersVC: UIViewController {
         collectionView.frame = view.bounds
         collectionView.backgroundColor = .systemBackground
         collectionView.collectionViewLayout = UIHelper.createFlowLayout(in: view)
+        collectionView.delegate = self
     }
     
     func configureDataSource() {
@@ -62,6 +63,20 @@ extension FollowersVC: FollowersVCDelegate {
     func didUpdateData(with snapshot: NSDiffableDataSourceSnapshot<Section, Follower>) {
         DispatchQueue.main.async {
             self.collectionViewDiffableDataSource.apply(snapshot, animatingDifferences: true , completion: nil)
+        }
+    }
+}
+
+extension FollowersVC: UICollectionViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentSize = scrollView.contentSize.height
+        let height = scrollView.bounds.height
+        
+        if offsetY + height >= contentSize {
+            guard followersViewModel.hasMoreFollowers else { return }
+            followersViewModel.page += 1
+            followersViewModel.getFollowers(for: username, page: followersViewModel.page)
         }
     }
 }
