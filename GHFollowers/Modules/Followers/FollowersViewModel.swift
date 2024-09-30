@@ -15,6 +15,7 @@ protocol FollowersViewModelProtocol {
 final class FollowersViewModel: FollowersViewModelProtocol {
     var followers: [Follower] = []
     var page: Int = 1
+    var hasMoreFollowers: Bool = true
     let networkManager: NetworkManagerProtocol
     weak var view: FollowersVCDelegate?
     
@@ -34,7 +35,10 @@ final class FollowersViewModel: FollowersViewModelProtocol {
         networkManager.getFollowers(for: username, page: page) {[weak self] result in
             switch result {
             case .success(let followers):
-                self?.followers = followers
+                if followers.count < 100 {
+                    self?.hasMoreFollowers = false
+                }
+                self?.followers.append(contentsOf: followers)
                 self?.updateData()
             case .failure(let error):
                 print(error)

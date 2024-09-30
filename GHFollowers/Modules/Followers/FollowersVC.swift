@@ -33,7 +33,7 @@ class FollowersVC: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         followersViewModel.view = self
         setupUI()
-        followersViewModel.getFollowers(for: username)
+        followersViewModel.getFollowers(for: username, page: followersViewModel.page)
         configureDataSource()
     }
 
