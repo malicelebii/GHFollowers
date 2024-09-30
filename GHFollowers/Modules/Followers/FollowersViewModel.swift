@@ -9,11 +9,12 @@ import UIKit
 
 protocol FollowersViewModelProtocol {
     func updateData()
-    func getFollowers(for username: String?)
+    func getFollowers(for username: String?, page: Int)
 }
 
 final class FollowersViewModel: FollowersViewModelProtocol {
     var followers: [Follower] = []
+    var page: Int = 1
     let networkManager: NetworkManagerProtocol
     weak var view: FollowersVCDelegate?
     
@@ -28,9 +29,9 @@ final class FollowersViewModel: FollowersViewModelProtocol {
         view?.didUpdateData(with: snapshot)
     }
     
-    func getFollowers(for username: String?) {
+    func getFollowers(for username: String?, page: Int) {
         guard let username else { return }
-        networkManager.getFollowers(for: username, page: 1) {[weak self] result in
+        networkManager.getFollowers(for: username, page: page) {[weak self] result in
             switch result {
             case .success(let followers):
                 self?.followers = followers
