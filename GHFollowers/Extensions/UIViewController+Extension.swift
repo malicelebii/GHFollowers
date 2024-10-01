@@ -35,4 +35,12 @@ extension UIViewController {
         activityIndicator.center = container.center
         activityIndicator.startAnimating()
     }
+    
+    func hideLoadingIndicator() {
+        UIView.animate(withDuration: 0.3) {
+            container.alpha = 0
+        } completion: { _ in
+            container.removeFromSuperview()
+        }
+    }
 }
