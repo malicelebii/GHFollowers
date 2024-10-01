@@ -32,6 +32,7 @@ final class FollowersViewModel: FollowersViewModelProtocol {
     
     func getFollowers(for username: String?, page: Int) {
         guard let username else { return }
+        view?.showLoading()
         networkManager.getFollowers(for: username, page: page) {[weak self] result in
             switch result {
             case .success(let followers):
@@ -43,6 +44,7 @@ final class FollowersViewModel: FollowersViewModelProtocol {
             case .failure(let error):
                 print(error)
             }
+            self?.view?.hideLoading()
         }
     }
 }
