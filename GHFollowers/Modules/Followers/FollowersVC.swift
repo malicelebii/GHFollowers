@@ -13,6 +13,8 @@ enum Section {
 
 protocol FollowersVCDelegate: AnyObject {
     func didUpdateData(with snaphot: NSDiffableDataSourceSnapshot<Section, Follower>)
+    func showLoading()
+    func hideLoading()
 }
 
 class FollowersVC: UIViewController {
@@ -64,6 +66,14 @@ extension FollowersVC: FollowersVCDelegate {
         DispatchQueue.main.async {
             self.collectionViewDiffableDataSource.apply(snapshot, animatingDifferences: true , completion: nil)
         }
+    }
+    
+    func showLoading() {
+        showLoadingIndicator()
+    }
+    
+    func hideLoading() {
+        hideLoadingIndicator()
     }
 }
 
