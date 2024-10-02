@@ -38,11 +38,17 @@ class FollowersVC: UIViewController {
         setupUI()
         followersViewModel.getFollowers(for: username, page: followersViewModel.page)
         configureDataSource()
+        configureSearchController()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationItem.hidesSearchBarWhenScrolling = true
     }
     
     private func setupUI() {
@@ -59,6 +65,16 @@ class FollowersVC: UIViewController {
             cell.set(follower: follower)
             return cell
         }
+    }
+    
+    func configureSearchController() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for a username"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchController
     }
 }
 
