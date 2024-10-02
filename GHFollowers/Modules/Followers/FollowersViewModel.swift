@@ -34,17 +34,25 @@ final class FollowersViewModel: FollowersViewModelProtocol {
         guard let username else { return }
         view?.showLoading()
         networkManager.getFollowers(for: username, page: page) {[weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let followers):
                 if followers.count < 100 {
-                    self?.hasMoreFollowers = false
+                    self.hasMoreFollowers = false
                 }
-                self?.followers.append(contentsOf: followers)
-                self?.updateData()
+                self.followers.append(contentsOf: followers)
+                if self.followers.isEmpty {
+                    let message = "No followers found for \(username)"
+                    DispatchQueue.main.async {
+                        self.view?.showEmptyStateView(message: message)
+                    }
+                    return
+                }
+                self.updateData()
             case .failure(let error):
                 print(error)
             }
-            self?.view?.hideLoading()
+            self.view?.hideLoading()
         }
     }
 }
