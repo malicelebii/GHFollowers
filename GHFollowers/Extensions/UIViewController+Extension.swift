@@ -32,7 +32,11 @@ extension UIViewController {
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.color = .label
         container.addSubview(activityIndicator)
-        activityIndicator.center = container.center
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+        ])
         activityIndicator.startAnimating()
     }
     
