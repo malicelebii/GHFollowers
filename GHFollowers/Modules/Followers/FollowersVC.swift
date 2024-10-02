@@ -118,3 +118,7 @@ extension FollowersVC: UISearchResultsUpdating, UISearchBarDelegate {
         followersViewModel.searchFollowers(for: filter, page: 1)
     }
         
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        followersViewModel.updateData(on: followersViewModel.followers)
+    }
+}
