@@ -15,6 +15,7 @@ protocol FollowersVCDelegate: AnyObject {
     func didUpdateData(with snaphot: NSDiffableDataSourceSnapshot<Section, Follower>)
     func showLoading()
     func hideLoading()
+    func showEmptyStateView(message: String)
 }
 
 class FollowersVC: UIViewController {
@@ -74,6 +75,10 @@ extension FollowersVC: FollowersVCDelegate {
     
     func hideLoading() {
         hideLoadingIndicator()
+    }
+    
+    func showEmptyStateView(message: String) {
+        showEmptyStateView(with: message, in: view)
     }
 }
 
