@@ -41,10 +41,12 @@ extension UIViewController {
     }
     
     func hideLoadingIndicator() {
-        UIView.animate(withDuration: 0.3) {
-            container.alpha = 0
-        } completion: { _ in
-            container.removeFromSuperview()
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3) {
+                container.alpha = 0
+            } completion: { _ in
+                container.removeFromSuperview()
+            }
         }
     }
 }
