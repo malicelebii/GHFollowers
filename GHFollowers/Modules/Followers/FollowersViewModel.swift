@@ -10,10 +10,12 @@ import UIKit
 protocol FollowersViewModelProtocol {
     func updateData(on followers: [Follower])
     func getFollowers(for username: String?, page: Int)
+    func searchFollowers(for username: String, page: Int)
 }
 
 final class FollowersViewModel: FollowersViewModelProtocol {
     var followers: [Follower] = []
+    var filteredFollowers: [Follower] = []
     var page: Int = 1
     var hasMoreFollowers: Bool = true
     let networkManager: NetworkManagerProtocol
@@ -54,5 +56,10 @@ final class FollowersViewModel: FollowersViewModelProtocol {
             }
             self.view?.hideLoading()
         }
+    }
+    
+    func searchFollowers(for username: String, page: Int) {
+        filteredFollowers = self.followers.filter { $0.login.lowercased().contains(username.lowercased())}
+        updateData(on: filteredFollowers)
     }
 }
