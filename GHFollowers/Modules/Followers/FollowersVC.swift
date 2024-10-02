@@ -111,3 +111,10 @@ extension FollowersVC: UICollectionViewDelegate {
         }
     }
 }
+
+extension FollowersVC: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        followersViewModel.searchFollowers(for: filter, page: 1)
+    }
+        
