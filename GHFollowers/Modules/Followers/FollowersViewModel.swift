@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FollowersViewModelProtocol {
-    func updateData()
+    func updateData(on followers: [Follower])
     func getFollowers(for username: String?, page: Int)
 }
 
@@ -23,7 +23,7 @@ final class FollowersViewModel: FollowersViewModelProtocol {
         self.networkManager = networkManager
     }
     
-    func updateData() {
+    func updateData(on followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
@@ -48,7 +48,7 @@ final class FollowersViewModel: FollowersViewModelProtocol {
                     }
                     return
                 }
-                self.updateData()
+                self.updateData(on: followers)
             case .failure(let error):
                 print(error)
             }
