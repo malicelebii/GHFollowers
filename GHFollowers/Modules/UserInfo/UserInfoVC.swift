@@ -8,7 +8,7 @@
 import UIKit
 
 protocol UserInfoViewDelegate: AnyObject {
-    func didGetUserInfo()
+    func didGetUserInfo(user: User)
     func showAlert(with message: String)
 }
 
@@ -63,8 +63,11 @@ class UserInfoVC: UIViewController {
 }
 
 extension UserInfoVC: UserInfoViewDelegate {
-    func didGetUserInfo() {
-        
+    func didGetUserInfo(user: User) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.add(chilVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+        }
     }
     
     func showAlert(with message: String) {

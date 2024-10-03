@@ -27,6 +27,7 @@ final class UserInfoViewModel: UserInfoViewModelProtocol {
             switch result {
             case .success(let user):
                 print(user)
+                view?.didGetUserInfo(user: user)
             case .failure(let error):
                 self.view?.showAlert(with: error.rawValue)
             }
