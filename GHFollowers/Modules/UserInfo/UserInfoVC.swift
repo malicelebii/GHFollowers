@@ -14,6 +14,8 @@ protocol UserInfoViewDelegate: AnyObject {
 
 class UserInfoVC: UIViewController {
     var userInfoViewModel: UserInfoViewModelProtocol
+
+    var headerView = UIView()
     
     init(userInfoViewModel: UserInfoViewModelProtocol) {
         self.userInfoViewModel = userInfoViewModel
@@ -29,6 +31,25 @@ class UserInfoVC: UIViewController {
         view.backgroundColor = .systemBackground
         configureNavigationbar()
         userInfoViewModel.view = self
+        configureHeaderView()
+    }
+    
+    func configureHeaderView() {
+        view.addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 180)
+        ])
+    }
+    
+    func add(chilVC: UIViewController, to containerView: UIView) {
+        addChild(chilVC)
+        containerView.addSubview(chilVC.view)
+        chilVC.view.frame = containerView.bounds
+        chilVC.didMove(toParent: self)
     }
     
     func configureNavigationbar() {
