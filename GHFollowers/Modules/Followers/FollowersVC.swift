@@ -110,6 +110,15 @@ extension FollowersVC: UICollectionViewDelegate {
             followersViewModel.getFollowers(for: username, page: followersViewModel.page)
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let activeArray = followersViewModel.isSearching ? followersViewModel.filteredFollowers : followersViewModel.followers
+        let follower = activeArray[indexPath.item]
+        let userInfoVC = UserInfoVC()
+        userInfoVC.username = follower.login
+        let nav = UINavigationController(rootViewController: userInfoVC)
+        present(nav, animated: true, completion: nil)
+    }
 }
 
 extension FollowersVC: UISearchResultsUpdating, UISearchBarDelegate {
