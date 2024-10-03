@@ -54,7 +54,7 @@ final class NetworkManager: NetworkManagerProtocol {
     }
     
     func getUser(for username: String, completion: @escaping (Result<User, NetworkErrors>) -> Void) {
-        let endpoint = baseURL + username + "asd"
+        let endpoint = baseURL + username
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
