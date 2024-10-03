@@ -7,13 +7,28 @@
 
 import UIKit
 
+protocol UserInfoViewDelegate: AnyObject {
+    func didGetUserInfo()
+    func showAlert(with message: String)
+}
+
 class UserInfoVC: UIViewController {
-    var username: String?
+    var userInfoViewModel: UserInfoViewModelProtocol
+    
+    init(userInfoViewModel: UserInfoViewModelProtocol) {
+        self.userInfoViewModel = userInfoViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureNavigationbar()
+        userInfoViewModel.view = self
     }
     
     func configureNavigationbar() {
@@ -23,5 +38,15 @@ class UserInfoVC: UIViewController {
     
     @objc func dismissVC() {
         dismiss(animated: true)
+    }
+}
+
+extension UserInfoVC: UserInfoViewDelegate {
+    func didGetUserInfo() {
+        
+    }
+    
+    func showAlert(with message: String) {
+        presentGFAlert(title: "Error", message: message, buttonTitle: "OK")
     }
 }
