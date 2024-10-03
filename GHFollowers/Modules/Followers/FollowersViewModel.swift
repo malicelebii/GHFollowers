@@ -18,6 +18,7 @@ final class FollowersViewModel: FollowersViewModelProtocol {
     var filteredFollowers: [Follower] = []
     var page: Int = 1
     var hasMoreFollowers: Bool = true
+    var isSearching: Bool = false
     let networkManager: NetworkManagerProtocol
     weak var view: FollowersVCDelegate?
     
