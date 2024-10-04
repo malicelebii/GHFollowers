@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum ItemInfoType {
+    case repos, followers, following, gists
+}
+
 class GFItemInfoView: UIView {
     let symbolImageView = UIImageView()
     let titleLabel = GFTitleLabel(textAlingment: .left, fontSize: 14)
@@ -52,5 +56,24 @@ class GFItemInfoView: UIView {
             countLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             countLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
+    }
+    
+    func set(itemInfoType: ItemInfoType, withCount count: Int) {
+        switch itemInfoType {
+        case .repos:
+            symbolImageView.image = UIImage(systemName: "folder")
+            titleLabel.text = "Repos"
+        case .followers:
+            symbolImageView.image = UIImage(systemName: "heart")
+            titleLabel.text = "Followers"
+        case .following:
+            symbolImageView.image = UIImage(systemName: "person.2.fill")
+            titleLabel.text = "Following"
+        case .gists:
+            symbolImageView.image = UIImage(systemName: "text.alignleft")
+            titleLabel.text = "Gists"
+        }
+        
+        countLabel.text = String(count)
     }
 }
