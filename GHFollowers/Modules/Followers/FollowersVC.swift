@@ -18,6 +18,10 @@ protocol FollowersVCDelegate: AnyObject {
     func showEmptyStateView(message: String)
 }
 
+protocol FollowersUserInfoDelegate: AnyObject {
+    func didFetchFollowers(for username: String)
+}
+
 class FollowersVC: UIViewController {
     let followersViewModel = FollowersViewModel()
 
@@ -115,6 +119,7 @@ extension FollowersVC: UICollectionViewDelegate {
         let activeArray = followersViewModel.isSearching ? followersViewModel.filteredFollowers : followersViewModel.followers
         let follower = activeArray[indexPath.item]
         let userInfoVC = UserInfoVC(userInfoViewModel: UserInfoViewModel(username: follower.login))
+        userInfoVC.followersUserInfoDelegate = self
         let nav = UINavigationController(rootViewController: userInfoVC)
         present(nav, animated: true, completion: nil)
     }
@@ -130,5 +135,18 @@ extension FollowersVC: UISearchResultsUpdating, UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         followersViewModel.updateData(on: followersViewModel.followers)
         followersViewModel.isSearching = false
+    }
+}
+
+extension FollowersVC: FollowersUserInfoDelegate {
+    func didFetchFollowers(for username: String) {
+        self.username = username
+        self.title = username
+        followersViewModel.followers.removeAll()
+        followersViewModel.filteredFollowers.removeAll()
+        followersViewModel.page = 1
+        collectionView.setContentOffset(.zero, animated: true)
+        followersViewModel.getFollowers(for: username, page: followersViewModel.page)
+        
     }
 }

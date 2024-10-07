@@ -25,6 +25,8 @@ class UserInfoVC: UIViewController {
     var itemViewOne = UIView()
     var itemViewTwo = UIView()
     var joinDateLabel = GFBodyLabel(textAlingment: .center)
+
+    weak var followersUserInfoDelegate: FollowersUserInfoDelegate?
     
     init(userInfoViewModel: UserInfoViewModelProtocol) {
         self.userInfoViewModel = userInfoViewModel
@@ -137,5 +139,9 @@ extension UserInfoVC: ItemInfoViewDelegate {
     }
     
     func didTapGetFollowers(for user: User) {
+        followersUserInfoDelegate?.didFetchFollowers(for: user.login)
+        DispatchQueue.main.async {
+            self.dismissVC()
+        }
     }
 }
