@@ -62,7 +62,7 @@ class GFItemInfoView: UIView {
         switch itemInfoType {
         case .repos:
             symbolImageView.image = UIImage(systemName: "folder")
-            titleLabel.text = "Repos"
+            titleLabel.text = "Public Repos"
         case .followers:
             symbolImageView.image = UIImage(systemName: "heart")
             titleLabel.text = "Followers"
@@ -71,7 +71,7 @@ class GFItemInfoView: UIView {
             titleLabel.text = "Following"
         case .gists:
             symbolImageView.image = UIImage(systemName: "text.alignleft")
-            titleLabel.text = "Gists"
+            titleLabel.text = "Public Gists"
         }
         
         countLabel.text = String(count)
