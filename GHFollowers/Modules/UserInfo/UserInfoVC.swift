@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import SafariServices
 
 protocol UserInfoViewDelegate: AnyObject {
     func didGetUserInfo(user: User)
     func showAlert(with message: String)
+}
+
+protocol ItemInfoViewDelegate: AnyObject {
+    func didTapGithubProfile(for user: User)
 }
 
 class UserInfoVC: UIViewController {
@@ -100,10 +105,12 @@ class UserInfoVC: UIViewController {
 
 extension UserInfoVC: UserInfoViewDelegate {
     func didGetUserInfo(user: User) {
+        let repoVC = GFRepoItemVC(user: user)
+        repoVC.delegate = self
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.add(chilVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
-            self.add(chilVC: GFRepoItemVC(user: user), to: self.itemViewOne)
+            self.add(chilVC: repoVC, to: self.itemViewOne)
             self.add(chilVC: GFFollowersItemVC(user: user), to: self.itemViewTwo)
             
             let date = user.createdAt.convertToDate()
@@ -114,5 +121,14 @@ extension UserInfoVC: UserInfoViewDelegate {
     
     func showAlert(with message: String) {
         presentGFAlert(title: "Error", message: message, buttonTitle: "OK")
+    }
+}
+
+extension UserInfoVC: ItemInfoViewDelegate {
+    func didTapGithubProfile(for user: User) {
+        if let url = URL(string: user.htmlUrl) {
+            let vc = SFSafariViewController(url: url)
+            present(vc, animated: true)
+        }
     }
 }
