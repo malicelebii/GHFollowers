@@ -15,6 +15,7 @@ protocol UserInfoViewDelegate: AnyObject {
 
 protocol ItemInfoViewDelegate: AnyObject {
     func didTapGithubProfile(for user: User)
+    func didTapGetFollowers(for user: User)
 }
 
 class UserInfoVC: UIViewController {
@@ -107,11 +108,14 @@ extension UserInfoVC: UserInfoViewDelegate {
     func didGetUserInfo(user: User) {
         let repoVC = GFRepoItemVC(user: user)
         repoVC.delegate = self
+        let followersVC = GFFollowersItemVC(user: user)
+        followersVC.delegate = self
+        
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.add(chilVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
             self.add(chilVC: repoVC, to: self.itemViewOne)
-            self.add(chilVC: GFFollowersItemVC(user: user), to: self.itemViewTwo)
+            self.add(chilVC: followersVC, to: self.itemViewTwo)
             
             let date = user.createdAt.convertToDate()
             let displayString = date?.convertToMonthYearFormat()
@@ -130,5 +134,8 @@ extension UserInfoVC: ItemInfoViewDelegate {
             let vc = SFSafariViewController(url: url)
             present(vc, animated: true)
         }
+    }
+    
+    func didTapGetFollowers(for user: User) {
     }
 }
