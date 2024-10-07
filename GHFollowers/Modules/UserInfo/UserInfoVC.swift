@@ -16,6 +16,8 @@ class UserInfoVC: UIViewController {
     var userInfoViewModel: UserInfoViewModelProtocol
 
     var headerView = UIView()
+    var itemViewOne = UIView()
+    var itemViewTwo = UIView()
     
     init(userInfoViewModel: UserInfoViewModelProtocol) {
         self.userInfoViewModel = userInfoViewModel
@@ -32,6 +34,7 @@ class UserInfoVC: UIViewController {
         configureNavigationbar()
         userInfoViewModel.view = self
         configureHeaderView()
+        configureItems()
     }
     
     func configureHeaderView() {
@@ -41,7 +44,26 @@ class UserInfoVC: UIViewController {
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 180)
+            headerView.heightAnchor.constraint(equalToConstant: 180),
+        ])
+    }
+    
+    func configureItems() {
+        view.addSubview(itemViewOne)
+        view.addSubview(itemViewTwo)
+        itemViewOne.translatesAutoresizingMaskIntoConstraints = false
+        itemViewTwo.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            itemViewOne.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            itemViewOne.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            itemViewOne.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20),
+            itemViewOne.heightAnchor.constraint(equalToConstant: 150),
+            
+            itemViewTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            itemViewTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            itemViewTwo.topAnchor.constraint(equalTo: itemViewOne.bottomAnchor, constant: 20),
+            itemViewTwo.heightAnchor.constraint(equalToConstant: 150),
         ])
     }
     
@@ -67,6 +89,8 @@ extension UserInfoVC: UserInfoViewDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.add(chilVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+            self.add(chilVC: GFRepoItemVC(user: user), to: self.itemViewOne)
+            self.add(chilVC: GFFollowersItemVC(user: user), to: self.itemViewTwo)
         }
     }
     
