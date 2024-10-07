@@ -18,6 +18,7 @@ class UserInfoVC: UIViewController {
     var headerView = UIView()
     var itemViewOne = UIView()
     var itemViewTwo = UIView()
+    var joinDateLabel = GFBodyLabel(textAlingment: .center)
     
     init(userInfoViewModel: UserInfoViewModelProtocol) {
         self.userInfoViewModel = userInfoViewModel
@@ -35,6 +36,7 @@ class UserInfoVC: UIViewController {
         userInfoViewModel.view = self
         configureHeaderView()
         configureItems()
+        configureJoinDateLabel()
     }
     
     func configureHeaderView() {
@@ -64,6 +66,18 @@ class UserInfoVC: UIViewController {
             itemViewTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             itemViewTwo.topAnchor.constraint(equalTo: itemViewOne.bottomAnchor, constant: 20),
             itemViewTwo.heightAnchor.constraint(equalToConstant: 150),
+        ])
+    }
+    
+    func configureJoinDateLabel() {
+        view.addSubview(joinDateLabel)
+        joinDateLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            joinDateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            joinDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            joinDateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: 20),
+            joinDateLabel.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
