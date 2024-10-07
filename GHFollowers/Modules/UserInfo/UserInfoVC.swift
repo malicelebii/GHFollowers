@@ -105,6 +105,10 @@ extension UserInfoVC: UserInfoViewDelegate {
             self.add(chilVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
             self.add(chilVC: GFRepoItemVC(user: user), to: self.itemViewOne)
             self.add(chilVC: GFFollowersItemVC(user: user), to: self.itemViewTwo)
+            
+            let date = user.createdAt.convertToDate()
+            let displayString = date?.convertToMonthYearFormat()
+            self.joinDateLabel.text = displayString
         }
     }
     
