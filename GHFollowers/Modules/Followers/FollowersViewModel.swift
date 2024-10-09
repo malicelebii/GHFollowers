@@ -11,6 +11,7 @@ protocol FollowersViewModelProtocol {
     func updateData(on followers: [Follower])
     func getFollowers(for username: String?, page: Int)
     func searchFollowers(for username: String, page: Int)
+    func addToFavorites(_ follower: Follower)
 }
 
 final class FollowersViewModel: FollowersViewModelProtocol {
@@ -62,5 +63,9 @@ final class FollowersViewModel: FollowersViewModelProtocol {
     func searchFollowers(for username: String, page: Int) {
         filteredFollowers = self.followers.filter { $0.login.lowercased().contains(username.lowercased())}
         updateData(on: filteredFollowers)
+    }
+    
+    func addToFavorites(_ follower: Follower) {
+        print(follower)
     }
 }

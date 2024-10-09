@@ -38,6 +38,7 @@ class FollowersVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         followersViewModel.view = self
         setupUI()
         followersViewModel.getFollowers(for: username, page: followersViewModel.page)
@@ -79,6 +80,10 @@ class FollowersVC: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
+    }
+    
+    @objc private func addButtonTapped() {
+        followersViewModel.addToFavorites(Follower(login: "deneme", avatarUrl: "deneme"))
     }
 }
 
