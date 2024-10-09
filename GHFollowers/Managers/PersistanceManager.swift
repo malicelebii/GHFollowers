@@ -55,6 +55,9 @@ enum PersistanceManager {
                 case .add:
                     if !retrievedFavorites.contains(favorite) {
                         retrievedFavorites.append(favorite)
+                    } else {
+                        completion(.failure(.setError))
+                        return
                     }
                 default:
                     if retrievedFavorites.contains(favorite), let index = retrievedFavorites.firstIndex(of: favorite) {
