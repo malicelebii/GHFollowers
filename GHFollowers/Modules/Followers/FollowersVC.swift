@@ -16,6 +16,8 @@ protocol FollowersVCDelegate: AnyObject {
     func showLoading()
     func hideLoading()
     func showEmptyStateView(message: String)
+    func didAddFavorite()
+    var username: String? { get }
 }
 
 protocol FollowersUserInfoDelegate: AnyObject {
@@ -83,7 +85,7 @@ class FollowersVC: UIViewController {
     }
     
     @objc private func addButtonTapped() {
-        followersViewModel.addToFavorites(Follower(login: "deneme", avatarUrl: "deneme"))
+        followersViewModel.addToFavorites()
     }
 }
 
@@ -104,6 +106,10 @@ extension FollowersVC: FollowersVCDelegate {
     
     func showEmptyStateView(message: String) {
         showEmptyStateView(with: message, in: view)
+    }
+    
+    func didAddFavorite() {
+        self.presentGFAlert(title: "Success", message: "Added to favorites", buttonTitle: "OK")
     }
 }
 

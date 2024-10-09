@@ -11,7 +11,7 @@ protocol FollowersViewModelProtocol {
     func updateData(on followers: [Follower])
     func getFollowers(for username: String?, page: Int)
     func searchFollowers(for username: String, page: Int)
-    func addToFavorites(_ follower: Follower)
+    func addToFavorites()
 }
 
 final class FollowersViewModel: FollowersViewModelProtocol {
@@ -65,7 +65,25 @@ final class FollowersViewModel: FollowersViewModelProtocol {
         updateData(on: filteredFollowers)
     }
     
-    func addToFavorites(_ follower: Follower) {
-        print(follower)
+    func addToFavorites() {
+        guard let username = view?.username else { return }
+        var avatarUrl: String = ""
+        networkManager.getUser(for: username) { result in
+            switch result {
+            case .success(let user):
+                avatarUrl = user.avatarUrl
+                let favorite = Follower(login: username, avatarUrl: avatarUrl)
+                PersistanceManager.updateWith(favorite: favorite, actionType: .add) {[weak self] result in
+                    switch result {
+                    case .success:
+                        self?.view?.didAddFavorite()
+                    case .failure(let error):
+                        break
+                    }
+                }
+            case .failure:
+                break
+            }
+        }
     }
 }
