@@ -24,8 +24,10 @@ class FavoritesListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            view.backgroundColor = .red
         favoritesViewModel.delegate = self
+        view.backgroundColor = .systemBackground
+        navigationItem.title = "Favorites"
+        navigationItem.largeTitleDisplayMode = .always
         view.addSubview(favoritesTableView)
         favoritesTableView.delegate = self
         favoritesTableView.dataSource = self
